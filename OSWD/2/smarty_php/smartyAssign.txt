@@ -1,0 +1,90 @@
+index.php
+---------------------------------------------------------
+
+<?php 
+error_reporting(0);
+
+require './libs/Smarty.class.php';
+
+
+$smarty = new Smarty;
+
+$smarty->assign('name', "akshali");
+$val = $_GET["nm"];
+$smarty->assign('retval', $val);
+
+
+
+if($val == null)
+{
+	$smarty->assign('name', "akshali");
+
+}
+elseif($val=="home") 
+{
+	
+	$smarty->assign('hm', 'Home Page');
+
+}
+elseif($val=="contact") 
+{
+
+	$smarty->assign('con', 'Contact No: 1234567890');
+}
+elseif ($val=="faq") 
+{
+	$smarty->assign('QandA',array(
+	array('question' => 'Q-1. What is PHP full form ?', 'answer' => ' Ans: Personal Home Page'),
+	array('question' => 'Q-2. What is JS full form ?', 'answer' => 'Ans: Java Script')
+	));
+
+}
+
+$smarty->display ('index.tpl');
+
+?>
+-------------------------------------------	
+index.tpl
+------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<table border="1">
+	<tr> <td><a href="index.php?nm=home"> Home </a> </td> </tr>
+	<tr> <td><a href="index.php?nm=contact"> Contact us </a> </td> </tr>
+	<tr> <td><a href="index.php?nm=faq"> FAQ </a> </td> </tr>
+
+</table>
+	
+
+	{if $retval==null}
+	<h2> Welcome to {$name} </h2>
+
+	{elseif $retval=='home'}
+	<h2>{$hm} </h2>
+
+
+	{elseif $retval=='contact'}
+	<h2> {$con} </h2>
+	
+	{elseif $retval=='faq'}
+		<table border="2">
+			<br><br>
+				{foreach $QandA as $qa}
+					<tr><ul>
+						<td><b><li> {$qa.question} </li> </b></td>
+						<td><li> {$qa.answer} </li> </td>
+					</tr>
+				{/foreach}
+
+		</table>
+	
+
+	{/if}
+
+</body>
+</html>
